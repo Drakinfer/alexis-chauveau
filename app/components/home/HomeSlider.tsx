@@ -5,6 +5,7 @@ import { AnimatePresence, motion, type Transition } from 'framer-motion';
 import Presentation from './Presentation';
 import Stacks from './Stacks';
 import Projects from './Projects';
+import { TypedObject } from 'sanity';
 
 type Step = 0 | 1 | 2;
 
@@ -23,7 +24,7 @@ export type Project = {
   _id: string;
   title: string;
   slug?: string;
-  description: string;
+  description: TypedObject[];
   stack?: string[];
   links?: { demo?: string; github?: string };
   publishedAt?: string;
