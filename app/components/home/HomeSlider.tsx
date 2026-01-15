@@ -8,6 +8,27 @@ import Projects from './Projects';
 
 type Step = 0 | 1 | 2;
 
+export type Settings = {
+  brandName: string;
+  presentation: string;
+  status: string;
+  contact?: { email?: string; phone?: string; location?: string };
+  links?: { github?: string; linkedin?: string };
+  education?: { title: string; school: string; year: string }[];
+};
+
+export type StackItem = { _id: string; name: string; type: string };
+
+export type Project = {
+  _id: string;
+  title: string;
+  slug?: string;
+  description: string;
+  stack?: string[];
+  links?: { demo?: string; github?: string };
+  publishedAt?: string;
+};
+
 const pageVariants = {
   enter: (direction: 1 | -1) => ({
     x: direction === 1 ? 40 : -40,
@@ -31,7 +52,15 @@ const pageTransition: Transition = {
   ease: [0.22, 1, 0.36, 1] as const,
 };
 
-export default function HomeSlider() {
+export default function HomeSlider({
+  settings,
+  stack,
+  projects,
+}: {
+  settings: Settings;
+  stack: StackItem[];
+  projects: Project[];
+}) {
   const [step, setStep] = useState<Step>(0);
   const [direction, setDirection] = useState<1 | -1>(1);
 
@@ -48,16 +77,21 @@ export default function HomeSlider() {
       {
         id: 'presentation',
         label: 'Présentation',
-        node: <Presentation onNext={next} />,
+        node: <Presentation settings={settings} onNext={next} />,
       },
       {
-        id: 'stacks',
+        id: 'techniques',
         label: 'Stacks Technique',
-        node: <Stacks onPrev={prev} onNext={next} />,
+        node: <Stacks stack={stack} onPrev={prev} onNext={next} />,
       },
-      { id: 'projects', label: 'Projets', node: <Projects onPrev={prev} /> },
+      {
+        id: 'projects',
+        label: 'Projets',
+        node: <Projects projects={projects} onPrev={prev} />,
+      },
     ],
-    [step],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [step, settings, stack, projects],
   );
 
   const active = sections[step];
