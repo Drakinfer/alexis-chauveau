@@ -12,7 +12,7 @@ function unauthorized() {
   });
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   if (process.env.NODE_ENV !== 'production') {
     return NextResponse.next();
   }
