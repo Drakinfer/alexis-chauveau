@@ -1,5 +1,4 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
 export const config = {
   matcher: ['/studio/:path*'],
@@ -8,14 +7,15 @@ export const config = {
 function unauthorized() {
   return new NextResponse('Auth required', {
     status: 401,
-    headers: { 'WWW-Authenticate': 'Basic realm="Studio"' },
+    headers: {
+      'WWW-Authenticate': 'Basic realm="Studio"',
+    },
   });
 }
 
-export function proxy(req: NextRequest) {
-  if (process.env.NODE_ENV !== 'production') {
-    return NextResponse.next();
-  }
+export default function proxy(req: NextRequest) {
+  // dev: pas de protection
+  //if (process.env.NODE_ENV !== 'production') return NextResponse.next();
 
   const user = process.env.STUDIO_USER;
   const pass = process.env.STUDIO_PASS;
@@ -24,10 +24,11 @@ export function proxy(req: NextRequest) {
   const auth = req.headers.get('authorization');
   if (!auth?.startsWith('Basic ')) return unauthorized();
 
-  const base64 = auth.slice('Basic '.length);
-  let decoded = '';
+  const encoded = auth.slice('Basic '.length);
+
+  let decoded: string;
   try {
-    decoded = Buffer.from(base64, 'base64').toString('utf8');
+    decoded = Buffer.from(encoded, 'base64').toString('utf8');
   } catch {
     return unauthorized();
   }
