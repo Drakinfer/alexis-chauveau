@@ -92,15 +92,6 @@ export default function Presentation({
           </div>
         </div>
       </div>
-
-      <div className="mt-6 flex justify-end">
-        <button
-          onClick={onNext}
-          className="rounded-2xl border border-white/20 bg-white/15 px-4 py-2 text-sm hover:bg-white/20 transition"
-        >
-          Voir mes compétences →
-        </button>
-      </div>
     </div>
   );
 }

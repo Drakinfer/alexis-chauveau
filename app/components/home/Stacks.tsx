@@ -50,21 +50,6 @@ export default function Stacks({
           </div>
         ))}
       </div>
-
-      <div className="mt-6 flex flex-wrap justify-between gap-3">
-        <button
-          onClick={onPrev}
-          className="rounded-2xl border border-white/15 bg-transparent px-4 py-2 text-sm hover:bg-white/10 transition"
-        >
-          ← Présentation
-        </button>
-        <button
-          onClick={onNext}
-          className="rounded-2xl border border-white/20 bg-white/15 px-4 py-2 text-sm hover:bg-white/20 transition"
-        >
-          Projets →
-        </button>
-      </div>
     </div>
   );
 }

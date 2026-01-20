@@ -94,15 +94,6 @@ export default function Projects({
           ))}
         </div>
       )}
-
-      <div className="mt-6">
-        <button
-          onClick={onPrev}
-          className="rounded-2xl border border-white/15 bg-transparent px-4 py-2 text-sm hover:bg-white/10 transition"
-        >
-          ← Techniques
-        </button>
-      </div>
     </div>
   );
 }
